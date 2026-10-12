@@ -7,17 +7,14 @@ const { sequelize } = require('./models');
 
 const app = express();
 
-// View engine
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-// Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Routes
 app.use('/', require('./routes/index'));
 app.use('/branches', require('./routes/branches'));
 app.use('/categories', require('./routes/categories'));
@@ -29,10 +26,8 @@ app.use('/return', require('./routes/return'));
 app.use('/scrap', require('./routes/scrap'));
 app.use('/history', require('./routes/history'));
 
-// 404
 app.use((req, res) => res.status(404).render('error', { message: 'Page not found' }));
 
-// Error handler
 app.use((err, req, res, next) => {
   console.error(err);
   res.status(500).render('error', { message: err.message });
